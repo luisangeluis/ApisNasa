@@ -13,44 +13,16 @@
         <p>
 
         </p>
+
         <img alt="imagen" id="mi-imagen" style="max-width: 100%">
     </div>
 
-    <script>
-        const miImagen = document.querySelector('#mi-imagen');
+    <h2>Asteroides cerca de la tierra</h2>
 
-        async function apiRequest() {
+    <div id="epic"></div>
 
-            try {
-                let respuesta = await fetch("https://api.nasa.gov/planetary/apod?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm")
-                return respuesta;
+    <script src="./js/index.js"></script>
 
-            } catch (error) {
-                console.log(`ERROR: ${error}`);
-            }
-
-
-        }
-
-        apiRequest()
-            .then(response => {
-                // console.log(response);
-                return response.ok ? response.json() : Promise.reject(response);
-            }).then(json => {
-                // console.log(json.url);
-                miImagen.src = json.url
-
-            })
-            .catch(err => {
-                console.log(` ERROR: ${err.status}`);
-            })
-
-
-
-
-
-
-    </script>
 </body>
 
 </html>
