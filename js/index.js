@@ -1,5 +1,5 @@
-const miImagen = document.querySelector('#mi-imagen');
-
+const miImagen = document.querySelector('#api-imgday');
+const infoParagraph = document.querySelector('#info-imgday');
 
 async function apiRequest() {
 
@@ -19,9 +19,9 @@ apiRequest()
         // console.log(response);
         return response.ok ? response.json() : Promise.reject(response);
     }).then(json => {
-        // console.log(json.url);
+        console.log(json);
         miImagen.src = json.url
-
+        infoParagraph.textContent = json.explanation;
     })
     .catch(err => {
         console.log(` ERROR: ${err.status}`);
@@ -31,7 +31,7 @@ apiRequest()
 //Api fotos rover de marte
 
 const divPhotosRover = document.querySelector('#photos-rover');
-const neoFeed = async () => {
+const neoFeed = async() => {
 
     try {
         let data = await fetch("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3&api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm");
@@ -56,8 +56,8 @@ neoFeed()
             const img = document.createElement('img');
             const div = document.createElement('div');
 
-            img.setAttribute('class','rovert-img');
-            img.src= element.img_src;
+            img.setAttribute('class', 'rovert-img');
+            img.src = element.img_src;
             div.appendChild(img);
             fragmentPhotosRover.appendChild(div);
             console.log(element);
@@ -70,7 +70,7 @@ neoFeed()
         // //     const img = document.createElement('img');
         // //     let i = 0;
 
-            
+
 
         // //     i++;
 
@@ -86,4 +86,4 @@ neoFeed()
         // divEpic.appendChild(fragment);
 
     })
-    .catch(error=>console.log(`ERROR ${error}`))
+    .catch(error => console.log(`ERROR ${error}`))
