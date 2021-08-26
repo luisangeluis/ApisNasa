@@ -1,5 +1,6 @@
 const miImagen = document.querySelector('#api-imgday');
 const infoParagraph = document.querySelector('#info-imgday');
+const titleDayPhoto = document.querySelector('#title-foto');
 
 async function apiRequest() {
 
@@ -22,6 +23,8 @@ apiRequest()
         console.log(json);
         miImagen.src = json.url
         infoParagraph.textContent = json.explanation;
+        titleDayPhoto.textContent = json.title;
+
     })
     .catch(err => {
         console.log(` ERROR: ${err.status}`);
@@ -60,7 +63,7 @@ neoFeed()
             img.src = element.img_src;
             div.appendChild(img);
             fragmentPhotosRover.appendChild(div);
-            console.log(element);
+            // console.log(element);
         });
         divPhotosRover.appendChild(fragmentPhotosRover);
 
