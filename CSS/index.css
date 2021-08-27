@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    /* padding: 0; */
+}
+
+.contenedor {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/*Foto del dia*/
+
+.jumbotron {
+    /* box-sizing: border-box; */
+    width: 100%;
+    border: solid black 1px;
+    color: whitesmoke;
+}
+
+.jumbotron img {
+    width: 85%;
+    max-height: 400px;
+    object-fit: fill;
+}
+
+
+/*Fotos del rover*/
+
+.photos-rover {
+    display: grid;
+    gap: .5rem;
+    /* grid-template-columns: repeat(auto-fit,minmax(10rem,1fr)); */
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    /* grid-auto-rows: 100%; */
+    /*
+    overflow-x: hidden;
+    verflow-y: scroll; */
+}
