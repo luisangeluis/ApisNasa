@@ -7,26 +7,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Api's Nasa</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <!--Custom CSS-->
-    <link rel="stylesheet" href="./assets/CSS/index.css">
+    <link rel="stylesheet" href="./CSS/index.css">
 </head>
 
 <body>
     <div class="container ">
-        <!--JUMBOTRON-->
-        <div class="row jumbotron mx-0 justify-content-center  align-items-center">
-            <div class="col-lg-12 text-center p-2">
-                <p id="title-foto" class="text-center bg-dark mx-3"></p>
+        <!-- JUMBOTRON -->
+        <div class="jumbotron bg-dark text-white px-3 px-lg-5">
+            <div class="row mx-0 ">
+                <div class="col-lg-7 text-center align-self-center ">
 
-                <img src="" alt="" id="api-imgday" class="img-fluid">
+                    <div class="card bg-dark ">
+                        <p id="title-foto" ></p>
+                        <img src="..." class="" alt="..." id="api-imgday">
+                        <h5 class="card-title" >Imagen del dia</h5>
+
+                    </div>
+                </div>
+                <div class="col-lg-5 text-center p-2">
+
+                    <p class="card-text" id="info-imgday"></p>
+
+                </div>
+
             </div>
         </div>
-        <div class="row justify-content-center  align-items-center">
-            <div class="col-lg-12 text-center p-2">
-                <p class="mx-3" id="info-imgday"></p>
-            </div>
-        </div>
+
     </div>
     <!--
 <div class="container w-50 h-50">
@@ -50,8 +59,12 @@
 
     <!-- Option 2: Separate Popper and Bootstrap JS -->
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+        integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
+        integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
+        crossorigin="anonymous"></script>
 
     <script src="./js/index.js"></script>
 

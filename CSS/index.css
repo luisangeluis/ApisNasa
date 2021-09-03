@@ -2,6 +2,8 @@
     margin: 0;
     /* padding: 0; */
 }
+body{
+}
 
 .contenedor {
     width: 90%;
@@ -14,18 +16,19 @@
 
 .jumbotron {
     /* box-sizing: border-box; */
+    max-height: 700px;
+    /* height: 500px; */
     width: 100%;
-    border: solid black 1px;
-    color: whitesmoke;
 }
 
 .jumbotron img {
-    width: 85%;
-    max-height: 400px;
+    
     object-fit: fill;
 }
 
-
+#api-imgday{
+    max-height: 300px;
+}
 /*Fotos del rover*/
 
 .photos-rover {

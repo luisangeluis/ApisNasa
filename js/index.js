@@ -1,5 +1,9 @@
 const miImagen = document.querySelector('#api-imgday');
+// const miImagen = document.querySelector('.api-imgday');
+
 const infoParagraph = document.querySelector('#info-imgday');
+// const infoParagraph = document.querySelector('.info-imgday');
+
 const titleDayPhoto = document.querySelector('#title-foto');
 
 
