@@ -118,5 +118,13 @@ apiEpic()
     })
     .then(res => {
         console.log(res);
-        document.querySelector('#img-epic').src = `https://epic.gsfc.nasa.gov/archive/natural/2021/08/26/png/${res[0].image}.png`;
+        let fechaRuta = res[0].date;
+        let expReg = /(\d{2,4}-?){3,3}/gi;
+        console.log(fechaRuta);
+        let fechaEncontrada =  fechaRuta.match(expReg)
+        console.log(fechaEncontrada[0]);
+        fechaEncontrada[0] = fechaEncontrada[0].replace(/-/g,'/')
+        console.log(fechaEncontrada[0]);
+
+        document.querySelector('#img-epic').src = `https://epic.gsfc.nasa.gov/archive/natural/2021/09/06/png/${res[0].image}.png`;
     })
