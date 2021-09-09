@@ -3,6 +3,8 @@
     /* padding: 0; */
 }
 body{
+    background-color: lightslategray;
+    font-size: 16px;
 }
 
 .contenedor {
@@ -15,10 +17,16 @@ body{
 /*Foto del dia*/
 
 .jumbotron {
-    /* box-sizing: border-box; */
+    box-sizing: border-box;
     max-height: 700px;
+    /* font-size: 1rem; */
     /* height: 500px; */
     width: 100%;
+    padding:10px 10px;
+    font-size: 1.5em;
+}
+#info-imgday{
+    font-size: .6em;
 }
 
 .jumbotron img {
@@ -40,4 +48,18 @@ body{
     /*
     overflow-x: hidden;
     verflow-y: scroll; */
+}
+
+/*fotos epic*/
+.epic-imagenes{
+    display:grid;
+    grid-template-columns: repeat(auto-fill,minmax(min(100%,200px),1fr));
+    gap:10px
+}
+
+
+@media(max-width:600px) {
+    body{
+        font-size: 12px;
+    }
 }

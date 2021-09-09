@@ -99,7 +99,7 @@ apiRequest()
 //     .catch(error => console.log(`miError ${error}`))
 
 //Api epic
-
+const epicImagenes = document.querySelector('.epic-imagenes');
 const apiEpic = async() => {
     try {
         let data = await fetch('https://api.nasa.gov/EPIC/api/natural/images?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm');
@@ -113,18 +113,28 @@ const apiEpic = async() => {
 
 apiEpic()
     .then(res => {
-        console.log(res);
+        // console.log(res);
         return res.ok ? res.json() : Promise.reject(res);
     })
-    .then(res => {
-        console.log(res);
-        let fechaRuta = res[0].date;
+    .then(json => {
+        console.log(json);
+        
+        let fechaRuta= json[0].date;
         let expReg = /(\d{2,4}-?){3,3}/gi;
-        console.log(fechaRuta);
-        let fechaEncontrada =  fechaRuta.match(expReg)
-        console.log(fechaEncontrada[0]);
-        fechaEncontrada[0] = fechaEncontrada[0].replace(/-/g,'/')
-        console.log(fechaEncontrada[0]);
+        let fechaFormato = fechaRuta.match(expReg)
 
-        document.querySelector('#img-epic').src = `https://epic.gsfc.nasa.gov/archive/natural/2021/09/06/png/${res[0].image}.png`;
+        fechaFormato = fechaFormato[0].replace(/-/g,'/');
+        console.log(fechaFormato);
+
+        const fragmentImgEpic = document.createDocumentFragment();
+
+        json.forEach(element => {
+            console.log(typeof element.image)
+            const img = document.createElement('img');
+            img.setAttribute('class','img-fluid');
+            img.src = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`
+            fragmentImgEpic.appendChild(img);
+        });
+        epicImagenes.appendChild(fragmentImgEpic);
+        
     })
