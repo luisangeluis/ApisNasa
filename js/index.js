@@ -36,6 +36,18 @@ apiRequest()
         console.log(` ERROR: ${err.status}`);
     })
 
+const btnModalImgDay = document.querySelector('.btn-modal_day-img');
+
+
+btnModalImgDay.addEventListener('click',()=>{
+    apiRequest()
+        .then(response=> response.ok ? response.json() : Promise.reject(response))
+        .then(json=>{
+            let dayImg = document.querySelector('#modal-img_day');
+            dayImg.src=json.url;
+            dayImg.setAttribute('class','img-fluid');
+        })
+});
 
 //Api fotos rover de marte
 

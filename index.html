@@ -16,18 +16,19 @@
 <body>
     <div class="container ">
         <!-- JUMBOTRON -->
-        <div class="jumbotron bg-dark text-white px-3 px-lg-5 mb-3">
+        <div class="jumbotron bg-dark text-white mx-0 px-3 px-lg-1 mb-3">
             <div class="row mx-0 ">
-                <div class="col-lg-7 text-center align-self-center ">
+                <div class="col-lg-8 text-center align-self-center ">
 
                     <div class="card bg-dark ">
-                        <p id="title-foto" ></p>
+                        <p id="title-foto"></p>
                         <img src="..." class="" alt="..." id="api-imgday">
-                        <h5 class="card-title" >Imagen del dia</h5>
-
+                        <h5 class="card-title">Imagen del dia</h5>
+                        <button type="button" class=" btn btn-primary btn-modal_day-img mx-auto" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal" ">Ver imagen</button>
                     </div>
                 </div>
-                <div class="col-lg-5 text-center p-2">
+                <div class="col-lg-4 text-center p-2">
 
                     <p class="card-text" id="info-imgday"></p>
 
@@ -37,14 +38,22 @@
         </div>
 
     </div>
-    <!--
-<div class="container w-50 h-50">
-        <div class="row">
-            <h2 class="subtitle">Rover de marte</h2>
-            <div class="photos-rover" id="photos-rover"></div>
+
+    <!--Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg ">
+            <div class="modal-content text-center " style="background-color:lightslategray">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>cuerpo del modal</p>
+                    <img src="" alt="" id="modal-img_day">
+                </div>
+            </div>
         </div>
     </div>
--->
 
     <!--Api de Epic-->
     <div class="container">

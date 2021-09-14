@@ -22,7 +22,7 @@ body{
     /* font-size: 1rem; */
     /* height: 500px; */
     width: 100%;
-    padding:10px 10px;
+    padding:10px 0;
     font-size: 1.5em;
 }
 #info-imgday{
@@ -36,6 +36,13 @@ body{
 
 #api-imgday{
     max-height: 300px;
+}
+
+/*Modal imagen del dia*/
+
+.modal{
+    transition:all .4s ease-in-out;
+    
 }
 /*Fotos del rover*/
 
