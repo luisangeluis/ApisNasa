@@ -26,11 +26,16 @@ apiRequest()
         // console.log(response);
         return response.ok ? response.json() : Promise.reject(response);
     }).then(json => {
-        // console.log(json);
-        miImagen.src = json.url
+        console.log(json);
+        let fragment = document.createDocumentFragment();
+        let video =document.createElement('iframe');
+        video.src = json.url;
+        fragment.appendChild(video);
+        // document.querySelector('#card_img-day').appendChild(fragment);
+        // titleDayPhoto.insertAdjacentElement('afterend',fragment);
         infoParagraph.textContent = json.explanation;
         titleDayPhoto.textContent = json.title;
-
+        
     })
     .catch(err => {
         console.log(` ERROR: ${err.status}`);
@@ -129,19 +134,18 @@ apiEpic()
         return res.ok ? res.json() : Promise.reject(res);
     })
     .then(json => {
-        console.log(json);
-        
+        // console.log(json);
         let fechaRuta= json[0].date;
         let expReg = /(\d{2,4}-?){3,3}/gi;
         let fechaFormato = fechaRuta.match(expReg)
 
         fechaFormato = fechaFormato[0].replace(/-/g,'/');
-        console.log(fechaFormato);
+        // console.log(fechaFormato);
 
         const fragmentImgEpic = document.createDocumentFragment();
 
         json.forEach(element => {
-            console.log(typeof element.image)
+            // console.log(typeof element.image)
             const img = document.createElement('img');
             img.setAttribute('class','img-fluid');
             img.src = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`
