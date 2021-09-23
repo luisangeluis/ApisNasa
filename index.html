@@ -17,65 +17,67 @@
     <div class="container ">
         <!-- JUMBOTRON -->
         <div class="jumbotron bg-dark text-white mx-0 px-3 px-lg-1 mb-3">
-            <div class="row mx-0 ">
-                <div class="col-lg-8 text-center align-self-center ">
-
-                    <div class="card bg-dark " id="card_img-day">
-                        <p id="title-foto"></p>
-
-                        <h5 class="card-title">Imagen del dia</h5>
-                        <button type="button" class=" btn btn-primary btn-modal_day-img mx-auto" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal" ">Ver imagen</button>
+            <div class="row mx-0">
+                <div class="col-lg-12 text-center align-self-center ">
+                    <div class="card bg-dark" id="card_img-day">
+                        <div class="card-body">
+                            <h5 class="card-title img-day_title"></h5>
+                            <button type="button" class=" btn btn-primary btn-modal_day-img mx-auto"
+                                data-bs-toggle="modal" data-bs-target="#exampleModal" ">Ver imagen</button>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-4 text-center p-2">
-
-                    <p class="card-text" id="info-imgday"></p>
-
-                </div>
-
+                
             </div>
-        </div>
-
-    </div>
-
-    <!--Modal-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg ">
-            <div class="modal-content text-center " style="background-color:lightslategray">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>cuerpo del modal</p>
-                    <img src="" alt="" id="modal-img_day">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--Api de Epic-->
-    <div class="container">
-        <div class="epic">
             <div class="row">
-                <div class="col epic-imagenes">
-                    <!-- <img src="" alt="" id="img-epic" class="img-fluid"> -->
+                <div class="col-lg-12">
+                    <div class="card bg-dark">
+                        <div class="card-body">
+                            <h5 class="card-title img-day_title"></h5>
+                            <p class="card-text img-day_info" style="max-width: 100%;   text-overflow: ellipsis;"></p>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        <!--Modal-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg ">
+                <div class="modal-content text-center " style="background-color:lightslategray">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>cuerpo del modal</p>
+                        <img src="" alt="" id="modal-img_day">
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
+        <!--Api de Epic-->
+        <div class="container">
+            <div class="epic">
+                <div class="row">
+                    <div class="col epic-imagenes">
+                        <!-- <img src="" alt="" id="img-epic" class="img-fluid"> -->
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-        integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
-        integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
-        crossorigin="anonymous"></script>
+        <!-- Option 2: Separate Popper and Bootstrap JS -->
 
-    <script src="./js/index.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+            integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
+            integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
+            crossorigin="anonymous"></script>
+
+        <script src="./js/index.js"></script>
 
 
 </body>

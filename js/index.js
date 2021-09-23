@@ -1,12 +1,6 @@
-const miImagen = document.querySelector('#api-imgday');
-// const miImagen = document.querySelector('.api-imgday');
-
-const infoParagraph = document.querySelector('#info-imgday');
-// const infoParagraph = document.querySelector('.info-imgday');
-
-const titleDayPhoto = document.querySelector('#title-foto');
-
-
+const cardImgDay = document.querySelector('#card_img-day');
+const imgDayTitle = document.querySelectorAll('.img-day_title');
+const imgDayInfo = document.querySelector('.img-day_info');
 //Api imagen del dia
 async function apiRequest() {
 
@@ -17,8 +11,6 @@ async function apiRequest() {
     } catch (error) {
         console.log(`ERROR: ${error}`);
     }
-
-
 }
 
 apiRequest()
@@ -27,97 +19,45 @@ apiRequest()
         return response.ok ? response.json() : Promise.reject(response);
     }).then(json => {
         console.log(json);
-        let fragment = document.createDocumentFragment();
-        let video =document.createElement('iframe');
-        video.src = json.url;
-        fragment.appendChild(video);
-        // document.querySelector('#card_img-day').appendChild(fragment);
-        // titleDayPhoto.insertAdjacentElement('afterend',fragment);
-        infoParagraph.textContent = json.explanation;
-        titleDayPhoto.textContent = json.title;
-        
+        if (json.media_type === 'image') {
+            const fragment = document.createDocumentFragment();
+            const img = document.createElement('img');
+
+            img.src = json.url;
+            img.setAttribute('class','img-fluid');
+            fragment.appendChild(img);
+            cardImgDay.prepend(fragment);
+            imgDayTitle.forEach(element=>{
+                element.textContent = json.title
+            });
+            imgDayInfo.textContent = json.explanation;
+        }else{
+            cardImgDay.textContent = 'Es otro formato'
+        }
+
+
     })
     .catch(err => {
         console.log(` ERROR: ${err.status}`);
     })
 
+//Ventana Modal
 const btnModalImgDay = document.querySelector('.btn-modal_day-img');
 
-
-btnModalImgDay.addEventListener('click',()=>{
+btnModalImgDay.addEventListener('click', () => {
     apiRequest()
-        .then(response=> response.ok ? response.json() : Promise.reject(response))
-        .then(json=>{
+        .then(response => response.ok ? response.json() : Promise.reject(response))
+        .then(json => {
             let dayImg = document.querySelector('#modal-img_day');
-            dayImg.src=json.url;
-            dayImg.setAttribute('class','img-fluid');
+            dayImg.src = json.url;
+            dayImg.setAttribute('class', 'img-fluid');
         })
 });
 
-//Api fotos rover de marte
-
-// const divPhotosRover = document.querySelector('#photos-rover');
-// const neoFeed = async() => {
-
-//     try {
-//         let data = await fetch("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3&api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm");
-//         return data;
-
-//     } catch (error) {
-//         console.log(error);
-//     }
-
-// }
-
-// neoFeed()
-//     .then(response => {
-//         //  console.log(response);
-//         return response.ok ? response.json() : Promise.reject(response);
-//     })
-//     .then(json => {
-//         // console.log(json)
-
-//         const fragmentPhotosRover = document.createDocumentFragment();
-
-//         json.photos.forEach(element => {
-//             const img = document.createElement('img');
-//             const div = document.createElement('div');
-
-//             img.setAttribute('class', 'rovert-img');
-//             img.src = element.img_src;
-//             div.appendChild(img);
-//             fragmentPhotosRover.appendChild(div);
-//             // console.log(element);
-//         });
-//         divPhotosRover.appendChild(fragmentPhotosRover);
-
-//         // const fragment = document.createDocumentFragment();
-
-//         // // json.forEach(element => {
-//         // //     const img = document.createElement('img');
-//         // //     let i = 0;
-
-
-
-//         // //     i++;
-
-//         // // });
-
-//         // for(let i =0; i<json.length; i++){
-//         //     const img = document.createElement('img');
-//         //     img.src = json[i].image+'.png';
-//         //     fragment.appendChild(img);
-
-//         // }
-
-//         // divEpic.appendChild(fragment);
-
-//     })
-//     .catch(error => console.log(`miError ${error}`))
 
 //Api epic
 const epicImagenes = document.querySelector('.epic-imagenes');
-const apiEpic = async() => {
+const apiEpic = async () => {
     try {
         let data = await fetch('https://api.nasa.gov/EPIC/api/natural/images?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm');
 
@@ -135,11 +75,11 @@ apiEpic()
     })
     .then(json => {
         // console.log(json);
-        let fechaRuta= json[0].date;
+        let fechaRuta = json[0].date;
         let expReg = /(\d{2,4}-?){3,3}/gi;
         let fechaFormato = fechaRuta.match(expReg)
 
-        fechaFormato = fechaFormato[0].replace(/-/g,'/');
+        fechaFormato = fechaFormato[0].replace(/-/g, '/');
         // console.log(fechaFormato);
 
         const fragmentImgEpic = document.createDocumentFragment();
@@ -147,10 +87,10 @@ apiEpic()
         json.forEach(element => {
             // console.log(typeof element.image)
             const img = document.createElement('img');
-            img.setAttribute('class','img-fluid');
+            img.setAttribute('class', 'img-fluid');
             img.src = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`
             fragmentImgEpic.appendChild(img);
         });
         epicImagenes.appendChild(fragmentImgEpic);
-        
+
     })
