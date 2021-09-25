@@ -18,7 +18,7 @@ apiRequest()
         // console.log(response);
         return response.ok ? response.json() : Promise.reject(response);
     }).then(json => {
-        console.log(json);
+        // console.log(json);
         if (json.media_type === 'image') {
             const fragment = document.createDocumentFragment();
             const img = document.createElement('img');
@@ -55,7 +55,7 @@ btnModalImgDay.addEventListener('click', () => {
 });
 
 
-//Api epic
+//Api epic fotos de la tierra
 const epicImagenes = document.querySelector('.epic-imagenes');
 const apiEpic = async () => {
     try {
@@ -74,7 +74,7 @@ apiEpic()
         return res.ok ? res.json() : Promise.reject(res);
     })
     .then(json => {
-        // console.log(json);
+        console.log(json);
         let fechaRuta = json[0].date;
         let expReg = /(\d{2,4}-?){3,3}/gi;
         let fechaFormato = fechaRuta.match(expReg)
@@ -94,3 +94,18 @@ apiEpic()
         epicImagenes.appendChild(fragmentImgEpic);
 
     })
+
+//Carousel con las fotos de la api de epic
+
+    const carousel = document.querySelector('#carousel_tierra-imagenes');
+    const carouselImg = carousel.querySelectorAll(':scope .carousel-item');;
+    
+
+    console.log(carousel);
+    console.log(carouselImg);
+
+
+    carouselImg.forEach(element=>{
+        console.log(element);
+    })
+    
