@@ -24,14 +24,14 @@ apiRequest()
             const img = document.createElement('img');
 
             img.src = json.url;
-            img.setAttribute('class','img-fluid');
+            img.setAttribute('class', 'img-fluid');
             fragment.appendChild(img);
             cardImgDay.prepend(fragment);
-            imgDayTitle.forEach(element=>{
+            imgDayTitle.forEach(element => {
                 element.textContent = json.title
             });
             imgDayInfo.textContent = json.explanation;
-        }else{
+        } else {
             cardImgDay.textContent = 'Es otro formato'
         }
 
@@ -97,15 +97,48 @@ apiEpic()
 
 //Carousel con las fotos de la api de epic
 
-    const carousel = document.querySelector('#carousel_tierra-imagenes');
-    const carouselImg = carousel.querySelectorAll(':scope .carousel-item');;
-    
+const carousel = document.querySelectorAll('#carousel_tierra-imagenes');
+let srcImg = [];
 
-    console.log(carousel);
-    console.log(carouselImg);
+function makeCarousel  (src) {
+    const carouselElement = `<div class="carousel-item active">
+                                    <img src="${src}" class="d-block w-100" alt="...">
+                            </div>`
+
+    return carouselElement;
+}
+
+apiEpic()
+    .then(res => res.ok ? res.json() : Promise.reject(res))
+    .then(json => {
+        console.log(json);
+
+        addEventListener('resize', (e) => {
+            let screenWidth = window.innerWidth;
+            console.log(json);
+
+            const carouselImg = document.querySelector(`#carousel_tierra-imagenes .carousel-inner`);
+
+            if (window.innerWidth < 900) {
+                console.log(carouselImg);
+                const fragment = document.createDocumentFragment();
+
+                let fechaRuta = json[0].date;
+                let expReg = /(\d{2,4}-?){3,3}/gi;
+                let fechaFormato = fechaRuta.match(expReg)
+
+                fechaFormato = fechaFormato[0].replace(/-/g, '/');
+
+                json.forEach(element => {
+                    let imgSrc = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`;
+                    fragment.appendChild(makeCarousel(imgSrc));
+                })
+
+                carouselImg.appendChild(fragment);
+
+            }
 
 
-    carouselImg.forEach(element=>{
-        console.log(element);
+        })
     })
-    
+
