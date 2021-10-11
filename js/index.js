@@ -18,7 +18,7 @@ apiRequest()
         // console.log(response);
         return response.ok ? response.json() : Promise.reject(response);
     }).then(json => {
-        // console.log(json);
+        console.log(json);
         if (json.media_type === 'image') {
             const fragment = document.createDocumentFragment();
             const img = document.createElement('img');
@@ -32,13 +32,26 @@ apiRequest()
             });
             imgDayInfo.textContent = json.explanation;
         } else {
-            cardImgDay.textContent = 'Es otro formato'
+            // const jumbotron = document.querySelector('.jumbotron');
+            // cardImgDay.textContent = 'Es otro formato';
+            // console.log(json);
+            // let template = templateVideo.content.cloneNode(true);
+            // let iframeVideo = template.querySelector('iframe');
+
+            const iframe = document.createElement('iframe');
+            iframe.src = json.url;
+
+
+            // cardImgDay.appendChild(template);
+            cardImgDay.appendChild(iframe);
+
+
         }
 
 
     })
     .catch(err => {
-        console.log(` ERROR: ${err.status}`);
+        console.log(` ERROR: ${err}`);
     })
 
 //Ventana Modal
@@ -74,7 +87,7 @@ apiEpic()
         return res.ok ? res.json() : Promise.reject(res);
     })
     .then(json => {
-        console.log(json);
+        // console.log(json);
         let fechaRuta = json[0].date;
         let expReg = /(\d{2,4}-?){3,3}/gi;
         let fechaFormato = fechaRuta.match(expReg)
@@ -111,7 +124,7 @@ function makeCarousel  (src) {
 apiEpic()
     .then(res => res.ok ? res.json() : Promise.reject(res))
     .then(json => {
-        console.log(json);
+        // console.log(json);
 
         addEventListener('resize', (e) => {
             let screenWidth = window.innerWidth;
