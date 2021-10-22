@@ -81,40 +81,40 @@ const apiEpic = async () => {
 
 }
 
-apiEpic()
-    .then(res => {
-        // console.log(res);
-        return res.ok ? res.json() : Promise.reject(res);
-    })
-    .then(json => {
-        // console.log(json);
-        let fechaRuta = json[0].date;
-        let expReg = /(\d{2,4}-?){3,3}/gi;
-        let fechaFormato = fechaRuta.match(expReg)
+// apiEpic()
+//     .then(res => {
+//         // console.log(res);
+//         return res.ok ? res.json() : Promise.reject(res);
+//     })
+//     .then(json => {
+//         // console.log(json);
+//         let fechaRuta = json[0].date;
+//         let expReg = /(\d{2,4}-?){3,3}/gi;
+//         let fechaFormato = fechaRuta.match(expReg)
 
-        fechaFormato = fechaFormato[0].replace(/-/g, '/');
-        // console.log(fechaFormato);
+//         fechaFormato = fechaFormato[0].replace(/-/g, '/');
+//         // console.log(fechaFormato);
 
-        const fragmentImgEpic = document.createDocumentFragment();
+//         const fragmentImgEpic = document.createDocumentFragment();
 
-        json.forEach(element => {
-            // console.log(typeof element.image)
-            const img = document.createElement('img');
-            img.setAttribute('class', 'img-fluid');
-            img.src = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`
-            fragmentImgEpic.appendChild(img);
-        });
-        epicImagenes.appendChild(fragmentImgEpic);
+//         json.forEach(element => {
+//             // console.log(typeof element.image)
+//             const img = document.createElement('img');
+//             img.setAttribute('class', 'img-fluid');
+//             img.src = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`
+//             fragmentImgEpic.appendChild(img);
+//         });
+//         epicImagenes.appendChild(fragmentImgEpic);
 
-    })
+//     })
 
-//Carousel con las fotos de la api de epic
+//Carousel con las fotos de la api de epic fotos de la tierra
 
 const carousel = document.querySelectorAll('#carousel_tierra-imagenes');
 let srcImg = [];
 
-function makeCarousel  (src) {
-    const carouselElement = `<div class="carousel-item active">
+const makeCarousel = (src)=> {
+    const carouselElement = `<div class="carousel-item ">
                                     <img src="${src}" class="d-block w-100" alt="...">
                             </div>`
 
@@ -124,34 +124,28 @@ function makeCarousel  (src) {
 apiEpic()
     .then(res => res.ok ? res.json() : Promise.reject(res))
     .then(json => {
-        // console.log(json);
+        let fechaRuta = json[0].date;
+        let expReg = /(\d{2,4}-?){3,3}/gi;
+        let fechaFormato = fechaRuta.match(expReg)
 
-        addEventListener('resize', (e) => {
-            let screenWidth = window.innerWidth;
-            console.log(json);
+        fechaFormato = fechaFormato[0].replace(/-/g, '/');
+        // console.log(fechaFormato);
+        const carouselFragment = document.createDocumentFragment();
 
-            const carouselImg = document.querySelector(`#carousel_tierra-imagenes .carousel-inner`);
-
-            if (window.innerWidth < 900) {
-                console.log(carouselImg);
-                const fragment = document.createDocumentFragment();
-
-                let fechaRuta = json[0].date;
-                let expReg = /(\d{2,4}-?){3,3}/gi;
-                let fechaFormato = fechaRuta.match(expReg)
-
-                fechaFormato = fechaFormato[0].replace(/-/g, '/');
-
-                json.forEach(element => {
-                    let imgSrc = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`;
-                    fragment.appendChild(makeCarousel(imgSrc));
-                })
-
-                carouselImg.appendChild(fragment);
-
-            }
-
-
+        json.forEach(element=>{
+            console.log(element);
+            const divImg = document.createElement('div');
+            const img = document.createElement('img');
+            divImg.classList.add('carousel-item');
+            img.classList.add('d-block','w-100');
+            img.src = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`;
+            divImg.appendChild(img);
+            
+            carouselFragment.appendChild(divImg);
         })
+
+        document.querySelector('.carousel-inner').appendChild(carouselFragment);
+        document.querySelector('.carousel-inner').firstElementChild.classList.add('active');
+
     })
 
