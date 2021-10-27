@@ -18,7 +18,7 @@ apiRequest()
         // console.log(response);
         return response.ok ? response.json() : Promise.reject(response);
     }).then(json => {
-        console.log(json);
+        // console.log(json);
         if (json.media_type === 'image') {
             const fragment = document.createDocumentFragment();
             const img = document.createElement('img');
@@ -69,17 +69,17 @@ btnModalImgDay.addEventListener('click', () => {
 
 
 //Api epic fotos de la tierra
-const epicImagenes = document.querySelector('.epic-imagenes');
-const apiEpic = async () => {
-    try {
-        let data = await fetch('https://api.nasa.gov/EPIC/api/natural/images?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm');
+// const epicImagenes = document.querySelector('.epic-imagenes');
+// const apiEpic = async () => {
+//     try {
+//         let data = await fetch('https://api.nasa.gov/EPIC/api/natural/images?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm');
 
-        return data;
-    } catch (error) {
-        console.log(`miError ${error}`);
-    }
+//         return data;
+//     } catch (error) {
+//         console.log(`miError ${error}`);
+//     }
 
-}
+// }
 
 // apiEpic()
 //     .then(res => {
@@ -110,42 +110,65 @@ const apiEpic = async () => {
 
 //Carousel con las fotos de la api de epic fotos de la tierra
 
-const carousel = document.querySelectorAll('#carousel_tierra-imagenes');
-let srcImg = [];
+// const carousel = document.querySelectorAll('#carousel_tierra-imagenes');
+// let srcImg = [];
 
-const makeCarousel = (src)=> {
-    const carouselElement = `<div class="carousel-item ">
-                                    <img src="${src}" class="d-block w-100" alt="...">
-                            </div>`
+// const makeCarousel = (src)=> {
+//     const carouselElement = `<div class="carousel-item ">
+//                                     <img src="${src}" class="d-block w-100" alt="...">
+//                             </div>`
 
-    return carouselElement;
+//     return carouselElement;
+// }
+
+// apiEpic()
+//     .then(res => res.ok ? res.json() : Promise.reject(res))
+//     .then(json => {
+//         let fechaRuta = json[0].date;
+//         let expReg = /(\d{2,4}-?){3,3}/gi;
+//         let fechaFormato = fechaRuta.match(expReg)
+
+//         fechaFormato = fechaFormato[0].replace(/-/g, '/');
+//         // console.log(fechaFormato);
+//         const carouselFragment = document.createDocumentFragment();
+
+//         json.forEach(element=>{
+//             console.log(element);
+//             const divImg = document.createElement('div');
+//             const img = document.createElement('img');
+//             divImg.classList.add('carousel-item');
+//             img.classList.add('d-block','w-75','mx-auto');
+//             img.src = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`;
+//             divImg.appendChild(img);
+//             carouselFragment.appendChild(divImg);
+//         })
+
+//         document.querySelector('.carousel-inner').appendChild(carouselFragment);
+//         document.querySelector('.carousel-inner').firstElementChild.classList.add('active');
+
+//     })
+
+
+const anchoVentana = document.documentElement.clientWidth;
+if (anchoVentana <= 600) {
+    console.log('hola');
 }
 
-apiEpic()
-    .then(res => res.ok ? res.json() : Promise.reject(res))
-    .then(json => {
-        let fechaRuta = json[0].date;
-        let expReg = /(\d{2,4}-?){3,3}/gi;
-        let fechaFormato = fechaRuta.match(expReg)
-
-        fechaFormato = fechaFormato[0].replace(/-/g, '/');
-        // console.log(fechaFormato);
-        const carouselFragment = document.createDocumentFragment();
-
-        json.forEach(element=>{
-            console.log(element);
-            const divImg = document.createElement('div');
-            const img = document.createElement('img');
-            divImg.classList.add('carousel-item');
-            img.classList.add('d-block','w-100');
-            img.src = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`;
-            divImg.appendChild(img);
-            
-            carouselFragment.appendChild(divImg);
+addEventListener('resize', () => {
+    const anchoVentana = document.documentElement.clientWidth;
+    // console.log(anchoVentana);
+    
+    getData('https://api.nasa.gov/planetary/apod?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Nc')
+        .then(res => res.ok ? res.json() : Promise.reject(res) )
+        .then( json => console.log(json) )
+        .catch(error=>{
+            console.log(error);
         })
+        
+})
 
-        document.querySelector('.carousel-inner').appendChild(carouselFragment);
-        document.querySelector('.carousel-inner').firstElementChild.classList.add('active');
-
-    })
-
+const getData = async (pUrl) => {
+    
+    let res = await fetch(pUrl);
+    return res;
+}
