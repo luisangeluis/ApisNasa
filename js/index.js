@@ -1,6 +1,7 @@
 const cardImgDay = document.querySelector('#card_img-day');
 const imgDayTitle = document.querySelectorAll('.img-day_title');
 const imgDayInfo = document.querySelector('.img-day_info');
+const jumbotronContainer = document.querySelector('.jumbotron .container');
 //Api imagen del dia
 async function apiRequest() {
 
@@ -13,39 +14,38 @@ async function apiRequest() {
     }
 }
 
+//Template de video en jumbotron
+function templateIframe(pJson){
+    let template = document.querySelector('.template-iframe').content.cloneNode(true);
+    let iframe = template.querySelector('iframe');
+
+    iframe.src = pJson.url
+    return template;
+}
+
 apiRequest()
     .then(response => {
         // console.log(response);
         return response.ok ? response.json() : Promise.reject(response);
     }).then(json => {
         // console.log(json);
+        const fragment = document.createDocumentFragment();
+
         if (json.media_type === 'image') {
-            const fragment = document.createDocumentFragment();
             const img = document.createElement('img');
 
             img.src = json.url;
             img.setAttribute('class', 'img-fluid');
             fragment.appendChild(img);
-            cardImgDay.prepend(fragment);
-            imgDayTitle.forEach(element => {
-                element.textContent = json.title
-            });
-            imgDayInfo.textContent = json.explanation;
+            jumbotronContainer.appendChild(fragment);
+            
         } else {
-            // const jumbotron = document.querySelector('.jumbotron');
-            // cardImgDay.textContent = 'Es otro formato';
-            // console.log(json);
-            // let template = templateVideo.content.cloneNode(true);
-            // let iframeVideo = template.querySelector('iframe');
-
-            const iframe = document.createElement('iframe');
-            iframe.src = json.url;
-
-
-            // cardImgDay.appendChild(template);
-            cardImgDay.appendChild(iframe);
-
-
+            console.log(json);
+            console.log('hola');
+            
+            let template = templateIframe(json);
+            jumbotronContainer.appendChild(template);
+            
         }
 
 
@@ -55,17 +55,17 @@ apiRequest()
     })
 
 //Ventana Modal
-const btnModalImgDay = document.querySelector('.btn-modal_day-img');
+// const btnModalImgDay = document.querySelector('.btn-modal_day-img');
 
-btnModalImgDay.addEventListener('click', () => {
-    apiRequest()
-        .then(response => response.ok ? response.json() : Promise.reject(response))
-        .then(json => {
-            let dayImg = document.querySelector('#modal-img_day');
-            dayImg.src = json.url;
-            dayImg.setAttribute('class', 'img-fluid');
-        })
-});
+// btnModalImgDay.addEventListener('click', () => {
+//     apiRequest()
+//         .then(response => response.ok ? response.json() : Promise.reject(response))
+//         .then(json => {
+//             let dayImg = document.querySelector('#modal-img_day');
+//             dayImg.src = json.url;
+//             dayImg.setAttribute('class', 'img-fluid');
+//         })
+// });
 
 
 //Api epic fotos de la tierra
