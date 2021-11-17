@@ -1,8 +1,8 @@
-const cardImgDay = document.querySelector('#card_img-day');
-const imgDayTitle = document.querySelectorAll('.img-day_title');
-const imgDayInfo = document.querySelector('.img-day_info');
+// const cardImgDay = document.querySelector('#card_img-day');
+// const imgDayTitle = document.querySelectorAll('.img-day_title');
+// const imgDayInfo = document.querySelector('.img-day_info');
 const jumbotronContainer = document.querySelector('.jumbotron .container');
-//Api imagen del dia
+// //Api imagen del dia
 async function apiRequest() {
 
     try {
@@ -18,26 +18,40 @@ async function apiRequest() {
 function templateIframe(pJson){
     let template = document.querySelector('.template-iframe').content.cloneNode(true);
     let iframe = template.querySelector('iframe');
+    let p = template.querySelector('.card-text');
 
     iframe.src = pJson.url
+
+    p.textContent = pJson.text;
     return template;
 }
+//Template de la imagen
+function templateMainImg(pJson){
+    let template = document.querySelector('#template_main-img').content.cloneNode(true);
+    let img = template.querySelector('img');
+    let p = template.querySelector('.card-text');
+    let title = template.querySelector('.card-title');
 
+    img.src = pJson.url;
+    title.textContent = pJson.title
+    p.textContent =pJson.explanation;
+    return template;
+}
 apiRequest()
     .then(response => {
-        // console.log(response);
         return response.ok ? response.json() : Promise.reject(response);
     }).then(json => {
-        // console.log(json);
+        console.log(json);
         const fragment = document.createDocumentFragment();
 
         if (json.media_type === 'image') {
             const img = document.createElement('img');
 
-            img.src = json.url;
-            img.setAttribute('class', 'img-fluid');
-            fragment.appendChild(img);
-            jumbotronContainer.appendChild(fragment);
+            // img.src = json.url;
+            // img.setAttribute('class', 'img-fluid');
+            // fragment.appendChild(img);
+            let imgTemplate = templateMainImg(json);
+            jumbotronContainer.firstElementChild.firstElementChild.appendChild(imgTemplate);
             
         } else {
             console.log(json);
@@ -148,27 +162,27 @@ apiRequest()
 
 //     })
 
+//Evento rezise en ventana
+// const anchoVentana = document.documentElement.clientWidth;
+// if (anchoVentana <= 600) {
+//     console.log('hola');
+// }
 
-const anchoVentana = document.documentElement.clientWidth;
-if (anchoVentana <= 600) {
-    console.log('hola');
-}
-
-addEventListener('resize', () => {
-    const anchoVentana = document.documentElement.clientWidth;
-    // console.log(anchoVentana);
+// addEventListener('resize', () => {
+//     const anchoVentana = document.documentElement.clientWidth;
+//     // console.log(anchoVentana);
     
-    getData('https://api.nasa.gov/planetary/apod?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Nc')
-        .then(res => res.ok ? res.json() : Promise.reject(res) )
-        .then( json => console.log(json) )
-        .catch(error=>{
-            console.log(error);
-        })
+//     getData('https://api.nasa.gov/planetary/apod?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm')
+//         .then(res => res.ok ? res.json() : Promise.reject(res) )
+//         .then( json => console.log(json) )
+//         .catch(error=>{
+//             console.log(error);
+//         })
         
-})
+// })
 
-const getData = async (pUrl) => {
+// const getData = async (pUrl) => {
     
-    let res = await fetch(pUrl);
-    return res;
-}
+//     let res = await fetch(pUrl);
+//     return res;
+// }

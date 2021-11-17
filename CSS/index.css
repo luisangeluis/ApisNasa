@@ -7,50 +7,32 @@ body{
     font-size: 16px;
 }
 
-.contenedor {
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-
-/*Foto del dia*/
-
+/* Jumbotron Foto del dia*/
 .jumbotron {
-    box-sizing: border-box;
-    /* font-size: 1rem; */
-    /* height: 500px; */
-    max-height: 30em;
-    width: 90%;
     padding:10px;
     font-size: 1em;
 }
 .jumbotron .container{
     background-color: black;
     box-sizing: border-box;
-    /* max-height: 30em; */
-    width: 90%;
     padding:10px;
-    font-size: 1em;
 
 }
-.jumbotron img {
-    object-fit:fill;
-    max-height: 500px;
-    margin: 0 1em;
+.jumbotron .img-fluid{
+    max-height: 22em;
 }
-.jumbotron iframe{
-    max-height: 100em;
 
+.jumbotron .card{
+    max-height: 40em;
+    background-color: black;
+    color:whitesmoke;
 }
-.jumbotron p{
-    max-height: 300px;
+.jumbotron .card-body{
     overflow: auto;
+    
 }
-
 
 /*Modal imagen del dia*/
-
 .modal{
     transition:all .4s ease-in-out;
     
