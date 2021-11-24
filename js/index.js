@@ -1,6 +1,3 @@
-// const cardImgDay = document.querySelector('#card_img-day');
-// const imgDayTitle = document.querySelectorAll('.img-day_title');
-// const imgDayInfo = document.querySelector('.img-day_info');
 const jumbotronContainer = document.querySelector('.jumbotron .container');
 // //Api imagen del dia
 async function apiRequest() {
@@ -15,7 +12,7 @@ async function apiRequest() {
 }
 
 //Template de video en jumbotron
-function templateIframe(pJson){
+function templateIframe(pJson) {
     let template = document.querySelector('.template-iframe').content.cloneNode(true);
     let iframe = template.querySelector('iframe');
     let p = template.querySelector('.card-text');
@@ -26,7 +23,7 @@ function templateIframe(pJson){
     return template;
 }
 //Template de la imagen
-function templateMainImg(pJson){
+function templateMainImg(pJson) {
     let template = document.querySelector('#template_main-img').content.cloneNode(true);
     let img = template.querySelector('img');
     let p = template.querySelector('.card-text');
@@ -34,7 +31,7 @@ function templateMainImg(pJson){
 
     img.src = pJson.url;
     title.textContent = pJson.title
-    p.textContent =pJson.explanation;
+    p.textContent = pJson.explanation;
     return template;
 }
 apiRequest()
@@ -52,14 +49,14 @@ apiRequest()
             // fragment.appendChild(img);
             let imgTemplate = templateMainImg(json);
             jumbotronContainer.firstElementChild.firstElementChild.appendChild(imgTemplate);
-            
+
         } else {
             console.log(json);
             console.log('hola');
-            
+
             let template = templateIframe(json);
             jumbotronContainer.appendChild(template);
-            
+
         }
 
 
@@ -83,44 +80,79 @@ apiRequest()
 
 
 //Api epic fotos de la tierra
-// const epicImagenes = document.querySelector('.epic-imagenes');
-// const apiEpic = async () => {
-//     try {
-//         let data = await fetch('https://api.nasa.gov/EPIC/api/natural/images?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm');
+const epicImagenes = document.querySelector('.epic-imagenes .container');
+const apiEpic = async () => {
+    try {
+        let data = await fetch('https://api.nasa.gov/EPIC/api/natural/images?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm');
 
-//         return data;
-//     } catch (error) {
-//         console.log(`miError ${error}`);
-//     }
+        return data;
+    } catch (error) {
+        console.log(`miError ${error}`);
+    }
 
-// }
+}
 
-// apiEpic()
-//     .then(res => {
-//         // console.log(res);
-//         return res.ok ? res.json() : Promise.reject(res);
-//     })
-//     .then(json => {
-//         // console.log(json);
-//         let fechaRuta = json[0].date;
-//         let expReg = /(\d{2,4}-?){3,3}/gi;
-//         let fechaFormato = fechaRuta.match(expReg)
 
-//         fechaFormato = fechaFormato[0].replace(/-/g, '/');
-//         // console.log(fechaFormato);
 
-//         const fragmentImgEpic = document.createDocumentFragment();
+apiEpic()
+    .then(res => {
+        // console.log(res);
+        return res.ok ? res.json() : Promise.reject(res);
+    })
+    .then(json => {
+        // console.log(json);
+        let fechaRuta = json[0].date;
+        let expReg = /(\d{2,4}-?){3,3}/gi;
+        let fechaFormato = fechaRuta.match(expReg)
 
-//         json.forEach(element => {
-//             // console.log(typeof element.image)
-//             const img = document.createElement('img');
-//             img.setAttribute('class', 'img-fluid');
-//             img.src = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`
-//             fragmentImgEpic.appendChild(img);
-//         });
-//         epicImagenes.appendChild(fragmentImgEpic);
+        fechaFormato = fechaFormato[0].replace(/-/g, '/');
+        // console.log(fechaFormato);
 
-//     })
+        function anchoVentana () {
+            const anchoVentana = document.documentElement.clientWidth;
+            return anchoVentana;
+        
+        }
+
+        function templateCarousel(pJson) {
+            let template = document.querySelector('#carousel').content.cloneNode(true);
+            let carouselInner = template.querySelector('.carousel-inner');
+        
+            pJson.forEach(element => {
+                const carouselElement = `<div class="carousel-item ">
+                                            <img src="https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png" class="d-block w-100" alt="">
+                                        </div>`
+                carouselInner.innerHTML += carouselElement;
+            })
+        
+                template.innerHTML = carouselInner;
+            return template;
+        }
+        
+        const aVentana = anchoVentana();
+
+        if (aVentana <= 600) {
+            let carousel = templateCarousel(json);
+            epicImagenes.innerText = carousel;
+
+
+        } else {
+            const fragmentImgEpic = document.createDocumentFragment();
+
+            json.forEach(element => {
+                // console.log(typeof element.image)
+                const img = document.createElement('img');
+                img.setAttribute('class', 'img-fluid');
+                img.src = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`
+                fragmentImgEpic.appendChild(img);
+            });
+            epicImagenes.appendChild(fragmentImgEpic);
+        }
+
+
+
+    })
+
 
 //Carousel con las fotos de la api de epic fotos de la tierra
 
@@ -162,6 +194,8 @@ apiRequest()
 
 //     })
 
+
+
 //Evento rezise en ventana
 // const anchoVentana = document.documentElement.clientWidth;
 // if (anchoVentana <= 600) {
@@ -171,18 +205,18 @@ apiRequest()
 // addEventListener('resize', () => {
 //     const anchoVentana = document.documentElement.clientWidth;
 //     // console.log(anchoVentana);
-    
+
 //     getData('https://api.nasa.gov/planetary/apod?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm')
 //         .then(res => res.ok ? res.json() : Promise.reject(res) )
 //         .then( json => console.log(json) )
 //         .catch(error=>{
 //             console.log(error);
 //         })
-        
+
 // })
 
 // const getData = async (pUrl) => {
-    
+
 //     let res = await fetch(pUrl);
 //     return res;
 // }
