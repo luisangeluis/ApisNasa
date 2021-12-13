@@ -82,77 +82,67 @@ apiRequest()
 //Api epic fotos de la tierra
 const epicImagenes = document.querySelector('.epic-imagenes .container');
 const apiEpic = async () => {
-    try {
-        let data = await fetch('https://api.nasa.gov/EPIC/api/natural/images?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm');
+    
+    let data = await fetch('https://api.nasa.gov/EPIC/api/natural/images?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm');
 
-        return data;
-    } catch (error) {
-        console.log(`miError ${error}`);
-    }
+    if(!data) 
+        throw new Error('hay un error')
+    else 
+        return data.json();
 
 }
 
 
 
-apiEpic()
-    .then(res => {
-        // console.log(res);
-        return res.ok ? res.json() : Promise.reject(res);
-    })
-    .then(json => {
-        // console.log(json);
-        let fechaRuta = json[0].date;
-        let expReg = /(\d{2,4}-?){3,3}/gi;
-        let fechaFormato = fechaRuta.match(expReg)
+// apiEpic()
+//     .then(res => {
+//         // console.log(res);
+//         return res.ok ? res.json() : Promise.reject(res);
+//     })
+//     .then(json => {
+//         // console.log(json);
+//         let fechaRuta = json[0].date;
+//         let expReg = /(\d{2,4}-?){3,3}/gi;
+//         let fechaFormato = fechaRuta.match(expReg)
 
-        fechaFormato = fechaFormato[0].replace(/-/g, '/');
-        // console.log(fechaFormato);
+//         fechaFormato = fechaFormato[0].replace(/-/g, '/');
+//         // console.log(fechaFormato);
+// })
 
-        function anchoVentana () {
-            const anchoVentana = document.documentElement.clientWidth;
-            return anchoVentana;
-        
-        }
+const getInfo = async () => {
+    try{
+        const info = await apiEpic();
+        return info;
+    }catch(error){
+        console.log(error);
+    }
+}
+function anchoVentana() {
+    const anchoVentana = document.documentElement.clientWidth;
+    return anchoVentana;
 
-        function templateCarousel(pJson) {
-            let template = document.querySelector('#carousel').content.cloneNode(true);
-            let carouselInner = template.querySelector('.carousel-inner');
-        
-            pJson.forEach(element => {
-                const carouselElement = `<div class="carousel-item ">
-                                            <img src="https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png" class="d-block w-100" alt="">
-                                        </div>`
-                carouselInner.innerHTML += carouselElement;
+}
+//USO DE JQUERY
+$(document).ready(function(){
+    const ancho =anchoVentana();
+    console.log(ancho);
+
+    if(ancho<=850){
+        getInfo()
+            .then(res =>{
+                console.log(res);
             })
-        
-                template.innerHTML = carouselInner;
-            return template;
-        }
-        
-        const aVentana = anchoVentana();
+    }
+    
+})
 
-        if (aVentana <= 600) {
-            let carousel = templateCarousel(json);
-            epicImagenes.innerText = carousel;
+//EVENTO PARA EL TAMAÑO DE LA VENTANA
+addEventListener('resize', () => {
+    ancho = anchoVentana();
+    console.log(ancho);
 
-
-        } else {
-            const fragmentImgEpic = document.createDocumentFragment();
-
-            json.forEach(element => {
-                // console.log(typeof element.image)
-                const img = document.createElement('img');
-                img.setAttribute('class', 'img-fluid');
-                img.src = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`
-                fragmentImgEpic.appendChild(img);
-            });
-            epicImagenes.appendChild(fragmentImgEpic);
-        }
-
-
-
-    })
-
+    
+})
 
 //Carousel con las fotos de la api de epic fotos de la tierra
 
