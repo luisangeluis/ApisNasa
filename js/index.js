@@ -38,7 +38,7 @@ apiRequest()
     .then(response => {
         return response.ok ? response.json() : Promise.reject(response);
     }).then(json => {
-        console.log(json);
+        // console.log(json);
         const fragment = document.createDocumentFragment();
 
         if (json.media_type === 'image') {
@@ -82,17 +82,15 @@ apiRequest()
 //Api epic fotos de la tierra
 const epicImagenes = document.querySelector('.epic-imagenes .container');
 const apiEpic = async () => {
-    
+
     let data = await fetch('https://api.nasa.gov/EPIC/api/natural/images?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm');
 
-    if(!data) 
+    if (!data)
         throw new Error('hay un error')
-    else 
+    else
         return data.json();
 
 }
-
-
 
 // apiEpic()
 //     .then(res => {
@@ -109,39 +107,87 @@ const apiEpic = async () => {
 //         // console.log(fechaFormato);
 // })
 
+//Obtener la info de las imagenes
 const getInfo = async () => {
-    try{
+    try {
         const info = await apiEpic();
         return info;
-    }catch(error){
+    } catch (error) {
         console.log(error);
     }
 }
+
+//Detectar el ancho de la pantalla del usuario.
 function anchoVentana() {
     const anchoVentana = document.documentElement.clientWidth;
     return anchoVentana;
 
 }
+
+//Template para imagenes vista normal
+function templateImgGaleria(pImg) {
+    let template = document.querySelector('.galeria_img').content.cloneNode(true);
+    let img = template.querySelector('img');
+
+    img.src = pImg;
+
+    return template;
+
+}
 //USO DE JQUERY
-$(document).ready(function(){
-    const ancho =anchoVentana();
+$(document).ready(function () {
+    let ancho = anchoVentana();
     console.log(ancho);
+    const containerGaleria = document.querySelector('.epic-imagenes');
 
-    if(ancho<=850){
-        getInfo()
-            .then(res =>{
-                console.log(res);
+    getInfo()
+        .then(json => {
+            console.log(json);
+
+            let fechaRuta = json[0].date;
+            let expReg = /(\d{2,4}-?){3,3}/gi;
+            let fechaFormato = fechaRuta.match(expReg)
+
+            let rutaImg ='';
+
+            fechaFormato = fechaFormato[0].replace(/-/g, '/');
+            // console.log(fechaFormato);
+
+            
+
+            if (ancho <= 850) {
+                console.log('carousel');
+                containerGaleria.firstElementChild.innerHTML ='';
+
+            } else {
+                console.log('vista normal');
+
+                json.forEach(element=>{
+                    rutaImg = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`;
+
+                    containerGaleria.firstElementChild.appendChild(templateImgGaleria(rutaImg)); 
+                })
+                // containerGaleria.firstElementChild.appendChild(templateImgGaleria('hola'));
+
+                templateImgGaleria('ruta');
+            }
+
+            //EVENTO PARA EL TAMAÑO DE LA VENTANA 
+            addEventListener('resize', () => {
+                ancho = anchoVentana();
+                console.log(ancho);
+                if (ancho <= 850) {
+                    console.log('carousel');
+                    containerGaleria.firstElementChild.innerHTML ='';
+
+
+                } else {
+                    console.log('vista normal');
+
+                    templateImgGaleria('ruta');
+                }
             })
-    }
-    
-})
-
-//EVENTO PARA EL TAMAÑO DE LA VENTANA
-addEventListener('resize', () => {
-    ancho = anchoVentana();
-    console.log(ancho);
-
-    
+        })
 })
 
 //Carousel con las fotos de la api de epic fotos de la tierra
