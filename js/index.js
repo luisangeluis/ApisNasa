@@ -134,6 +134,24 @@ function templateImgGaleria(pImg) {
     return template;
 
 }
+let template = document.querySelector('.carousel').content.cloneNode(true);
+let carouselInner = template.querySelector('.carousel-inner');
+let cont = 0;
+function templateImgCarousel(pImg) {
+
+    if (cont == 0) {
+        carouselInner.innerHTML += '<div class="carousel-item active">' +
+            '<img class="d-block w-100" src="' + pImg + '">'
+        '</div>';
+    } else {
+        carouselInner.innerHTML += '<div class="carousel-item">' +
+            '<img class="d-block w-100" src="' + pImg + '">'
+        '</div>';
+    }
+
+    cont++;
+    return template;
+}
 //USO DE JQUERY
 $(document).ready(function () {
     let ancho = anchoVentana();
@@ -148,29 +166,98 @@ $(document).ready(function () {
             let expReg = /(\d{2,4}-?){3,3}/gi;
             let fechaFormato = fechaRuta.match(expReg)
 
-            let rutaImg ='';
+            let rutaImg = '';
 
             fechaFormato = fechaFormato[0].replace(/-/g, '/');
             // console.log(fechaFormato);
 
-            
+            rutas = []
+
+            json.forEach(element => {
+                rutaImg = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`;
+
+                rutas.push(rutaImg);
+            })
 
             if (ancho <= 850) {
                 console.log('carousel');
-                containerGaleria.firstElementChild.innerHTML ='';
+                while(containerGaleria.firstElementChild.hasChildNodes()){
+                    containerGaleria.firstElementChild.removeChild(containerGaleria.firstElementChild.firstChild);
+                }
+                containerGaleria.firstElementChild.textContent = '';
+                document.querySelector('.epic-imagenes .container').classList.add('d-block');
+                rutas.forEach(element => {
+                    containerGaleria.firstElementChild.appendChild(templateImgCarousel(element));
+
+                })
+                // json.forEach(element=>{
+                //     rutaImg = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`;
+
+                // })
 
             } else {
                 console.log('vista normal');
+                while(containerGaleria.firstElementChild.hasChildNodes()){
+                    containerGaleria.firstElementChild.removeChild(containerGaleria.firstElementChild.firstChild);
+                }
+                containerGaleria.firstElementChild.textContent = '';
+                document.querySelector('.epic-imagenes .container').classList.remove('d-block');
 
-                json.forEach(element=>{
-                    rutaImg = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`;
+                rutas.forEach(element => {
+                    containerGaleria.firstElementChild.appendChild(templateImgGaleria(element));
 
-                    containerGaleria.firstElementChild.appendChild(templateImgGaleria(rutaImg)); 
                 })
+                // json.forEach(element=>{
+                //     rutaImg = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`;
+
+                //     containerGaleria.firstElementChild.appendChild(templateImgGaleria(rutaImg)); 
+                // })
                 // containerGaleria.firstElementChild.appendChild(templateImgGaleria('hola'));
 
-                templateImgGaleria('ruta');
+                // templateImgGaleria('ruta');
             }
+            addEventListener('rezise', () => {
+                ancho = anchoVentana();
+
+                if (ancho <= 850) {
+                    console.log('carousel');
+                    while(containerGaleria.firstElementChild.hasChildNodes()){
+                        containerGaleria.firstElementChild.removeChild(containerGaleria.firstElementChild.firstChild);
+                    }
+                    containerGaleria.firstElementChild.textContent = '';
+                    document.querySelector('.epic-imagenes .container').classList.add('d-block');
+                    rutas.forEach(element => {
+                        containerGaleria.firstElementChild.appendChild(templateImgCarousel(element));
+
+                    })
+                    // json.forEach(element=>{
+                    //     rutaImg = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`;
+
+                    // })
+
+                } else {
+                    console.log('vista normal');
+                    while(containerGaleria.firstElementChild.hasChildNodes()){
+                        containerGaleria.firstElementChild.removeChild(containerGaleria.firstElementChild.firstChild);
+                    }
+                    containerGaleria.firstElementChild.textContent = '';
+                    document.querySelector('.epic-imagenes .container').classList.remove('d-block');
+
+                    rutas.forEach(element => {
+                        containerGaleria.firstElementChild.appendChild(templateImgGaleria(element));
+
+                    })
+                    // json.forEach(element=>{
+                    //     rutaImg = `https://epic.gsfc.nasa.gov/archive/natural/${fechaFormato}/png/${element.image}.png`;
+
+                    //     containerGaleria.firstElementChild.appendChild(templateImgGaleria(rutaImg)); 
+                    // })
+                    // containerGaleria.firstElementChild.appendChild(templateImgGaleria('hola'));
+
+                    // templateImgGaleria('ruta');
+                }
+            })
+
 
             //EVENTO PARA EL TAMAÑO DE LA VENTANA 
             addEventListener('resize', () => {
@@ -178,13 +265,13 @@ $(document).ready(function () {
                 console.log(ancho);
                 if (ancho <= 850) {
                     console.log('carousel');
-                    containerGaleria.firstElementChild.innerHTML ='';
+                    // containerGaleria.firstElementChild.innerHTML ='';
 
 
                 } else {
                     console.log('vista normal');
 
-                    templateImgGaleria('ruta');
+                    // templateImgGaleria('ruta');
                 }
             })
         })
