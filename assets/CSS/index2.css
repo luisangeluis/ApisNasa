@@ -1,0 +1,12 @@
+.jumbotron {
+    min-height: 15em;
+}
+
+.jumbotron .container {
+    min-height: 100%;
+}
+
+#jumbotron_img {
+    max-height: 20em;
+    max-width: 60%;
+}
