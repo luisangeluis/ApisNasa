@@ -1,12 +1,11 @@
-.jumbotron {
-    min-height: 15em;
-}
-
-.jumbotron .container {
-    min-height: 100%;
-}
-
 #jumbotron_img {
-    max-height: 20em;
-    max-width: 60%;
+    max-height: 25em;
+    max-width: 95%;
+}
+
+@media (max-width:900px) {
+    .jumbotron_card .card-body {
+        max-height: 25em;
+        overflow-y: scroll;
+    }
 }
