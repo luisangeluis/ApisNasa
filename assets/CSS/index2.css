@@ -26,10 +26,10 @@
         /*JUMBOTRON*/
         
         @media (max-width:900px) {
-            /* #galeria_fotos {
-                grid-template-columns: repeat(2, 1fr);
+            #galeria_fotos {
+                grid-template-columns: 1fr;
                 gap: .5em;
-            } */
+            }
         }
         
         @media (max-width:700px) {

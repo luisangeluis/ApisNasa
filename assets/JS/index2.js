@@ -1,6 +1,7 @@
 /*PETICION DE APIS*/
 /*API IMG DAY*/
 const templateCardJumbotron = document.querySelector('#template_jumbotron-card');
+const templateVideoJumbotron = document.querySelector('#template_jumbotron-video');
 const cardJumbotron = document.querySelector('.jumbotron_card');
 
 const direccionImgDay = 'https://api.nasa.gov/planetary/apod?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm';
@@ -27,14 +28,30 @@ function construirCardJumbotron(pJson) {
     return template;
 }
 
+function construirVideo(pJson) {
+    let template = templateVideoJumbotron.content.cloneNode(true);
+    let iframe = template.querySelector('iframe');
+
+    iframe.src = pJson.url;
+    iframe.title = pJson.title;
+
+    return template
+
+}
+
 apiRequest(direccionImgDay)
     .then(response => {
         return response.ok ? response.json() : Promise.reject(response);
     })
     .then(json => {
-        // console.log(json);
+        console.log(json);
 
-        cardJumbotron.appendChild(construirCardJumbotron(json));
+        if (json.media_type == 'video') {
+            document.querySelector('#jumbotron_dinamyc-content').appendChild(construirVideo(json));
+        } else {
+            cardJumbotron.appendChild(construirCardJumbotron(json));
+
+        }
     })
     .catch(error => {
         console.log(error.statusText);
@@ -81,9 +98,6 @@ const construirCarousel = (pJson) => {
 
     })
 
-
-
-
     return template;
 
 }
@@ -110,17 +124,45 @@ getImagenes(direccionImgsTierra)
         return response.ok ? response.json() : Promise.reject(response);
     })
     .then(json => {
-        // console.log(json);
-        console.log(window.innerWidth);
 
-        if (window.innerWidth > 900)
+        let widthScreen = window.innerWidth
+
+        if (widthScreen > 900) {
+            while (fotosGaleria.childNodes.length >= 1) {
+                fotosGaleria.removeChild(fotosGaleria.firstChild);
+            }
             fotosGaleria.innerHTML = construirGaleria(json);
-
-        else {
+        } else {
+            console.log(fotosGaleria.childNodes.length);
+            while (fotosGaleria.childNodes.length >= 1) {
+                fotosGaleria.removeChild(fotosGaleria.firstChild);
+            }
             fotosGaleria.appendChild(construirCarousel(json));
-            fotosGaleria.classList.add('d-block');
+            // fotosGaleria.classList.add('d-block');
 
         }
+
+        window.addEventListener('resize', (e) => {
+            // console.log(e);
+            let widthScreen = window.innerWidth
+                // console.log(widthScreen);
+            if (widthScreen > 900) {
+                while (fotosGaleria.childNodes.length >= 1) {
+                    fotosGaleria.removeChild(fotosGaleria.firstChild);
+                }
+                fotosGaleria.innerHTML = construirGaleria(json);
+            } else {
+                console.log(fotosGaleria.childNodes.length);
+                while (fotosGaleria.childNodes.length >= 1) {
+                    fotosGaleria.removeChild(fotosGaleria.firstChild);
+                }
+                fotosGaleria.appendChild(construirCarousel(json));
+                // fotosGaleria.classList.add('d-block');
+
+            }
+
+        })
+
 
     })
     .catch(error => {
