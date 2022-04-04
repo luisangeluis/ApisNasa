@@ -59,7 +59,9 @@ apiRequest(direccionImgDay)
 
 
 /*API EPIC (IMAGENES DE LA TIERRA)*/
+// const direccionImgsTierra = 'https://api.nasa.gov/EPIC/api/natural/images?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm';
 const direccionImgsTierra = 'https://api.nasa.gov/EPIC/api/natural/images?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm';
+
 const fotosGaleria = document.querySelector('#galeria_fotos');
 
 const galeriaCarousel = document.querySelector('#template_galeria-carousel');
@@ -70,9 +72,14 @@ const construirGaleria = (pJson) => {
 
     pJson.forEach(element => {
         // console.log(element);
+        // galeria += `<div class="col">
+        //                 <img style="max-width:100%" src="https://api.nasa.gov/EPIC/archive/natural/2019/05/30/png/epic_1b_20190530011359.png?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm" alt="imagen" class="img-fluid">
+        //             </div>`
+
         galeria += `<div class="col">
-                        <img style="max-width:100%" src="https://api.nasa.gov/EPIC/archive/natural/2019/05/30/png/epic_1b_20190530011359.png?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm" alt="imagen" class="img-fluid">
+                         <img style="max-width:100%" src="${getImage(element)}" alt="imagen" class="img-fluid">
                     </div>`
+
     });
 
     return galeria;
@@ -86,11 +93,11 @@ const construirCarousel = (pJson) => {
         let imagenCarousel = '';
         if (index == 0) {
             imagenCarousel = `<div class="carousel-item active" >
-            	                <img src="https://api.nasa.gov/EPIC/archive/natural/2019/05/30/png/epic_1b_20190530011359.png?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm" class="d-block w-100" alt="...">
+                                <img style="max-width:100%" src="${getImage(element)}" alt="imagen" class="img-fluid">
                             </div>`
         } else {
             imagenCarousel = `<div class="carousel-item" >
-                                <img src="https://api.nasa.gov/EPIC/archive/natural/2019/05/30/png/epic_1b_20190530011359.png?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm" class="d-block w-100" alt="...">
+                                <img style="max-width:100%" src="${getImage(element)}" alt="imagen" class="img-fluid">
                             </div>`
         }
         carouselInner.innerHTML += imagenCarousel;
@@ -100,6 +107,18 @@ const construirCarousel = (pJson) => {
 
     return template;
 
+}
+
+/*Para construir cada una de las  imagenes*/
+const getImage = (pParametro) => {
+    let fecha = pParametro.date;
+    let fechaProcesada = fecha.split(' ');
+    fechaProcesada = fechaProcesada[0].replace(/-/g, '/');
+    // console.log(fechaProcesada)
+    // fechaProcesada.map(element => console.log(element))
+
+    let url = `https://api.nasa.gov/EPIC/archive/natural/${fechaProcesada}/png/${pParametro.image}.png?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm`;
+    return url;
 }
 
 const getApi = async(pDireccionApi) => {
@@ -124,7 +143,7 @@ getImagenes(direccionImgsTierra)
         return response.ok ? response.json() : Promise.reject(response);
     })
     .then(json => {
-
+        console.log(json);
         let widthScreen = window.innerWidth
 
         if (widthScreen > 900) {
