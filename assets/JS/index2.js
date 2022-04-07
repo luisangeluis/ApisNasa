@@ -59,11 +59,8 @@ apiRequest(direccionImgDay)
 
 
 /*API EPIC (IMAGENES DE LA TIERRA)*/
-// const direccionImgsTierra = 'https://api.nasa.gov/EPIC/api/natural/images?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm';
 const direccionImgsTierra = 'https://api.nasa.gov/EPIC/api/natural/images?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm';
-
 const fotosGaleria = document.querySelector('#galeria_fotos');
-
 const galeriaCarousel = document.querySelector('#template_galeria-carousel');
 
 const construirGaleria = (pJson) => {
@@ -77,7 +74,7 @@ const construirGaleria = (pJson) => {
         //             </div>`
 
         galeria += `<div class="col">
-                         <img style="max-width:100%" src="${getImage(element)}" alt="imagen" class="img-fluid">
+                         <img style="max-width:100%" src="${getImage(element)}" alt="imagen" class="img-fluid galeria_foto">
                     </div>`
 
     });
@@ -93,11 +90,11 @@ const construirCarousel = (pJson) => {
         let imagenCarousel = '';
         if (index == 0) {
             imagenCarousel = `<div class="carousel-item active" >
-                                <img style="max-width:100%" src="${getImage(element)}" alt="imagen" class="img-fluid">
+                                <img style="max-width:100%" src="${getImage(element)}" alt="imagen" class="img-fluid galeria_foto">
                             </div>`
         } else {
             imagenCarousel = `<div class="carousel-item" >
-                                <img style="max-width:100%" src="${getImage(element)}" alt="imagen" class="img-fluid">
+                                <img style="max-width:100%" src="${getImage(element)}" alt="imagen" class="img-fluid galeria_foto">
                             </div>`
         }
         carouselInner.innerHTML += imagenCarousel;

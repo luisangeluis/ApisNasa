@@ -1,3 +1,16 @@
+        * {
+            padding: 0;
+        }
+        
+        body {
+            background: rgb(8, 8, 22);
+            background: linear-gradient(117deg, rgba(8, 8, 22, 1) 17%, rgba(92, 92, 121, 1) 46%, rgba(105, 106, 157, 1) 59%, rgba(161, 178, 210, 1) 93%);
+        }
+        /*Navbar*/
+        
+        .main-navbar.navbar {
+            /* background-color: lightslategray; */
+        }
         /*JUMBOTRON*/
         
         .card {
@@ -22,6 +35,21 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 1em;
         }
+        
+        .galeria_foto {
+            filter: grayscale(.8);
+            transition: all .5s;
+        }
+        
+        .galeria_foto:hover {
+            filter: grayscale(0);
+            -webkit-transform: scale(1.1);
+            transform: scale(1.5);
+            border-radius: 10%;
+            -webkit-border-radius: 25%;
+            ;
+            /* opacity: .9; */
+        }
         /*QUERYS*/
         /*JUMBOTRON*/
         
@@ -29,6 +57,9 @@
             #galeria_fotos {
                 grid-template-columns: 1fr;
                 gap: .5em;
+            }
+            .galeria_foto {
+                filter: grayscale(0);
             }
         }
         
