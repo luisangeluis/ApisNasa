@@ -33,7 +33,7 @@
         #galeria_fotos {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 1em;
+            grid-gap: 1em;
         }
         
         .galeria_foto {
@@ -49,6 +49,11 @@
             -webkit-border-radius: 25%;
             ;
             /* opacity: .9; */
+        }
+        
+        .galeria_image-fecha {
+            background-color: red;
+            font-size: 3em;
         }
         /*QUERYS*/
         /*JUMBOTRON*/

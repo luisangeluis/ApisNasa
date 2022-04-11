@@ -44,7 +44,7 @@ apiRequest(direccionImgDay)
         return response.ok ? response.json() : Promise.reject(response);
     })
     .then(json => {
-        console.log(json);
+        // console.log(json);
 
         if (json.media_type == 'video') {
             document.querySelector('#jumbotron_dinamyc-content').appendChild(construirVideo(json));
@@ -63,20 +63,18 @@ const direccionImgsTierra = 'https://api.nasa.gov/EPIC/api/natural/images?api_ke
 const fotosGaleria = document.querySelector('#galeria_fotos');
 const galeriaCarousel = document.querySelector('#template_galeria-carousel');
 
+
+// imageFecha.textContent = 'hola'
+
 const construirGaleria = (pJson) => {
     let galeria = '';
-    // console.log(pJson.length);
 
-    pJson.forEach(element => {
-        // console.log(element);
-        // galeria += `<div class="col">
-        //                 <img style="max-width:100%" src="https://api.nasa.gov/EPIC/archive/natural/2019/05/30/png/epic_1b_20190530011359.png?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm" alt="imagen" class="img-fluid">
-        //             </div>`
-
+    pJson.forEach((element) => {
         galeria += `<div class="col">
-                         <img style="max-width:100%" src="${getImage(element)}" alt="imagen" class="img-fluid galeria_foto">
-                    </div>`
+                        <img style="max-width:100%" src="${getImage(element)}" alt="imagen" class="img-fluid galeria_foto">
+                        <p class="galeria_image-fecha">${element.date}</p>
 
+                    </div>`
     });
 
     return galeria;
@@ -118,6 +116,12 @@ const getImage = (pParametro) => {
     return url;
 }
 
+//EFECTO MAQUINA DE ESCRIBIR EN TEXTO
+const getLetter = (pText) => {
+    let text = pText.split('');
+    return text;
+}
+
 const getApi = async(pDireccionApi) => {
     const response = fetch(direccionImgsTierra);
     if (!response) throw new Error('Sin respuesta');
@@ -140,6 +144,9 @@ getImagenes(direccionImgsTierra)
         return response.ok ? response.json() : Promise.reject(response);
     })
     .then(json => {
+
+        console.log(json);
+
         console.log(json);
         let widthScreen = window.innerWidth
 
@@ -148,6 +155,8 @@ getImagenes(direccionImgsTierra)
                 fotosGaleria.removeChild(fotosGaleria.firstChild);
             }
             fotosGaleria.innerHTML = construirGaleria(json);
+
+            // console.log(fotosGaleria.querySelector('.galeria_image-fecha').textContent);
         } else {
             console.log(fotosGaleria.childNodes.length);
             while (fotosGaleria.childNodes.length >= 1) {
