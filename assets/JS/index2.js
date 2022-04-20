@@ -22,7 +22,8 @@ function construirCardJumbotron(pJson) {
     let texto = template.querySelector('.card-text');
 
     img.src = pJson.url;
-    titulo.textContent = pJson.title;
+    // titulo.textContent = pJson.title;
+    getEfectoMaquina(titulo, pJson.title)
     texto.textContent = pJson.explanation;
 
     return template;
@@ -106,21 +107,48 @@ const construirCarousel = (pJson) => {
 
 /*Para construir cada una de las  imagenes*/
 const getImage = (pParametro) => {
-    let fecha = pParametro.date;
-    let fechaProcesada = fecha.split(' ');
-    fechaProcesada = fechaProcesada[0].replace(/-/g, '/');
-    // console.log(fechaProcesada)
-    // fechaProcesada.map(element => console.log(element))
+        let fecha = pParametro.date;
+        let fechaProcesada = fecha.split(' ');
+        fechaProcesada = fechaProcesada[0].replace(/-/g, '/');
+        // console.log(fechaProcesada)
+        // fechaProcesada.map(element => console.log(element))
 
-    let url = `https://api.nasa.gov/EPIC/archive/natural/${fechaProcesada}/png/${pParametro.image}.png?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm`;
-    return url;
-}
+        let url = `https://api.nasa.gov/EPIC/archive/natural/${fechaProcesada}/png/${pParametro.image}.png?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm`;
+        return url;
+    }
+    // const writeEfectText = templateCardJumbotron.querySelector('h5');
+    // console.log(writeEfectText);
 
 //EFECTO MAQUINA DE ESCRIBIR EN TEXTO
-const getLetter = (pText) => {
+const getLetter = (pText, pIndice) => {
     let text = pText.split('');
-    return text;
+    return text[pIndice];
 }
+
+const getEfectoMaquina = (pElement, pText) => {
+
+    let i = 0;
+    let character = '';
+    const text = pText;
+    console.log(text);
+    console.log(text.length);
+
+    setInterval(function() {
+        if (i < text.length) {
+            // console.log(i);
+            character = getLetter(text, i);
+            pElement.textContent += character;
+
+            i += 1;
+        } else {
+            i = 0;
+            pElement.textContent = '';
+        }
+    }, 250)
+
+}
+
+// getEfectoMaquina();
 
 const getApi = async(pDireccionApi) => {
     const response = fetch(direccionImgsTierra);
@@ -145,20 +173,25 @@ getImagenes(direccionImgsTierra)
     })
     .then(json => {
 
-        console.log(json);
+        // console.log(json);
 
-        console.log(json);
+        // console.log(json);
         let widthScreen = window.innerWidth
 
         if (widthScreen > 900) {
             while (fotosGaleria.childNodes.length >= 1) {
                 fotosGaleria.removeChild(fotosGaleria.firstChild);
             }
+
             fotosGaleria.innerHTML = construirGaleria(json);
+
+            // console.log(writeEfectText.textContent)
+
+            // getEfectoMaquina(writeEfectText, writeEfectText.textContent);
 
             // console.log(fotosGaleria.querySelector('.galeria_image-fecha').textContent);
         } else {
-            console.log(fotosGaleria.childNodes.length);
+            // console.log(fotosGaleria.childNodes.length);
             while (fotosGaleria.childNodes.length >= 1) {
                 fotosGaleria.removeChild(fotosGaleria.firstChild);
             }
