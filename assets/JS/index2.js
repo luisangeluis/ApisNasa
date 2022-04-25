@@ -22,8 +22,10 @@ function construirCardJumbotron(pJson) {
     let texto = template.querySelector('.card-text');
 
     img.src = pJson.url;
+
     // titulo.textContent = pJson.title;
-    getEfectoMaquina(titulo, pJson.title)
+     getEfectoMaquina(titulo, pJson.title)
+
     texto.textContent = pJson.explanation;
 
     return template;
@@ -40,16 +42,91 @@ function construirVideo(pJson) {
 
 }
 
+//EFECTO MAQUINA DE ESCRIBIR EN TEXTO
+const getLetter = (pText, pIndice) => {
+    let text = pText.split('');
+    return text[pIndice];
+}
+
+// const getEfectoMaquina = (pElement, pText) => {
+
+//     let i = 0;
+//     // let character = '';
+//     const text = pText;
+//     // console.log(text);
+//     // console.log(text.length);
+
+//     setInterval(function() {
+//         if (i < text.length) {
+//             // console.log(i);
+//             let character = getLetter(text, i);
+//             pElement.textContent += character;
+
+//             i += 1;
+//         } else {
+//             i = 0;
+//             pElement.textContent = '';
+//         }
+//     }, 250)
+
+// }
+
+
+const getEfectoMaquina =(pElement,pText)=>{
+
+    let i =0;
+    
+    t = setInterval(function(){
+        if(i<pText.length){
+            pElement.textContent += getLetter(pText,i);
+            i++
+        }else{
+            // pElement.textContent = "";
+            // clearInterval(t);
+            // i =0;
+
+
+        }
+        
+    },400);
+    
+    
+}
+// getEfectoMaquina();
+const cbEfectoMaquina=(entries)=>{
+    console.log(entries);
+    entries.forEach(entry=>{
+        
+        let title = entry.target.children[1].children[0];
+        
+        if(entry.isIntersecting){
+            console.log('hola');
+            console.log(title);
+
+            getEfectoMaquina(title,'hola');
+            
+        }else{
+            title.textContent ="";
+        }
+    })
+   
+}
+
+const observerJumbotron = new IntersectionObserver(cbEfectoMaquina);
+
+observerJumbotron.observe(cardJumbotron);
+
 apiRequest(direccionImgDay)
     .then(response => {
         return response.ok ? response.json() : Promise.reject(response);
     })
     .then(json => {
-        // console.log(json);
+        console.log(json);
 
         if (json.media_type == 'video') {
             document.querySelector('#jumbotron_dinamyc-content').appendChild(construirVideo(json));
         } else {
+            
             cardJumbotron.appendChild(construirCardJumbotron(json));
 
         }
@@ -58,14 +135,24 @@ apiRequest(direccionImgDay)
         console.log(error.statusText);
     })
 
+/*Fin del jumbotron*/
 
 /*API EPIC (IMAGENES DE LA TIERRA)*/
 const direccionImgsTierra = 'https://api.nasa.gov/EPIC/api/natural/images?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm';
 const fotosGaleria = document.querySelector('#galeria_fotos');
 const galeriaCarousel = document.querySelector('#template_galeria-carousel');
 
+/*Para construir cada una de las  imagenes*/
+const getImage = (pParametro) => {
+    let fecha = pParametro.date;
+    let fechaProcesada = fecha.split(' ');
+    fechaProcesada = fechaProcesada[0].replace(/-/g, '/');
+    // console.log(fechaProcesada)
+    // fechaProcesada.map(element => console.log(element))
 
-// imageFecha.textContent = 'hola'
+    let url = `https://api.nasa.gov/EPIC/archive/natural/${fechaProcesada}/png/${pParametro.image}.png?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm`;
+    return url;
+}
 
 const construirGaleria = (pJson) => {
     let galeria = '';
@@ -97,59 +184,16 @@ const construirCarousel = (pJson) => {
                             </div>`
         }
         carouselInner.innerHTML += imagenCarousel;
-
-
     })
 
     return template;
-
 }
 
-/*Para construir cada una de las  imagenes*/
-const getImage = (pParametro) => {
-        let fecha = pParametro.date;
-        let fechaProcesada = fecha.split(' ');
-        fechaProcesada = fechaProcesada[0].replace(/-/g, '/');
-        // console.log(fechaProcesada)
-        // fechaProcesada.map(element => console.log(element))
 
-        let url = `https://api.nasa.gov/EPIC/archive/natural/${fechaProcesada}/png/${pParametro.image}.png?api_key=Ah62SEfDVY3K4OiuUs4ZI33Honwahn3xtef48Ncm`;
-        return url;
-    }
-    // const writeEfectText = templateCardJumbotron.querySelector('h5');
-    // console.log(writeEfectText);
+    
 
-//EFECTO MAQUINA DE ESCRIBIR EN TEXTO
-const getLetter = (pText, pIndice) => {
-    let text = pText.split('');
-    return text[pIndice];
-}
 
-const getEfectoMaquina = (pElement, pText) => {
-
-    let i = 0;
-    let character = '';
-    const text = pText;
-    console.log(text);
-    console.log(text.length);
-
-    setInterval(function() {
-        if (i < text.length) {
-            // console.log(i);
-            character = getLetter(text, i);
-            pElement.textContent += character;
-
-            i += 1;
-        } else {
-            i = 0;
-            pElement.textContent = '';
-        }
-    }, 250)
-
-}
-
-// getEfectoMaquina();
-
+//Obtener imagenes de la tierra
 const getApi = async(pDireccionApi) => {
     const response = fetch(direccionImgsTierra);
     if (!response) throw new Error('Sin respuesta');
@@ -187,7 +231,6 @@ getImagenes(direccionImgsTierra)
 
             // console.log(writeEfectText.textContent)
 
-            // getEfectoMaquina(writeEfectText, writeEfectText.textContent);
 
             // console.log(fotosGaleria.querySelector('.galeria_image-fecha').textContent);
         } else {
